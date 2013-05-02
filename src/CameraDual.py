@@ -37,8 +37,21 @@ print client
 #    time.sleep(1)
 #client.close()
 
-
-
+#---------------------------------------------------------------------------# 
+# D_AddressRef
+#---------------------------------------------------------------------------# 
+#Input address in decimal - then function would convert it to PLC address
+#Address 0x1000 stand for D register in PLC
+#Address 0x0258 stand for 600 in decimal
+#So to write to D600 register in the PLC
+#The reference address is 0x1258
+def D_AddressRef(d_Address):
+    d_Working = 4096
+    d_Working = d_Working + d_Address
+    return d_Working
+#---------------------------------------------------------------------------# 
+# ShortestDistance
+#---------------------------------------------------------------------------# 
 #function to find shortest distance between 2 line
 #provide 2 point of each line
 #find out what is the 2 closest point 
