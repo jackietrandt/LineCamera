@@ -17,27 +17,6 @@ from math import sin, cos, sqrt, pi, fabs
 import os
 
 #---------------------------------------------------------------------------# 
-# modbus serial com 
-#---------------------------------------------------------------------------# 
-
-from pymodbus.client.sync import ModbusSerialClient as ModbusClient
-import time
-import logging
-logging.basicConfig()
-log = logging.getLogger()
-log.setLevel(logging.DEBUG)
- 
-client = ModbusClient(method='ascii', port='com3', baudrate='115200', timeout=1)
-print client
-
-#example of modbus code ready for commissioning 
-#for x in range(1, 10):
-#    coil1 = client.read_coils(0, 2, unit=1)
-#    print coil1
-#    time.sleep(1)
-#client.close()
-
-#---------------------------------------------------------------------------# 
 # D_AddressRef
 #---------------------------------------------------------------------------# 
 #Input address in decimal - then function would convert it to PLC address
@@ -49,6 +28,36 @@ def D_AddressRef(d_Address):
     d_Working = 4096
     d_Working = d_Working + d_Address
     return d_Working
+
+#---------------------------------------------------------------------------# 
+# modbus serial com 
+#---------------------------------------------------------------------------# 
+
+from pymodbus.client.sync import ModbusSerialClient as ModbusClient
+import time
+import logging
+logging.basicConfig()
+log = logging.getLogger()
+log.setLevel(logging.DEBUG)
+ 
+client = ModbusClient(method='ascii', port='com3', baudrate='115200', timeout=1)
+print ("Init Modbus Comm ")
+print client
+
+#example of modbus code ready for commissioning 
+#for x in range(1, 10):
+#    coil1 = client.read_coils(0, 2, unit=1)
+#    print coil1
+#    time.sleep(1)
+#client.close()
+client.write_register(D_AddressRef(600), 123, unit=2 ) #unit=2 : mean PLC server address = 2
+#    def write_register(self, address, value, **kwargs): // Extracted from pymodbus\client\common.py
+#        '''
+#        :param address: The starting address to write to
+#        :param value: The value to write to the specified address
+#        :param unit: The slave unit this request is targeting
+#        :returns: A deferred response handle
+
 #---------------------------------------------------------------------------# 
 # ShortestDistance
 #---------------------------------------------------------------------------# 
